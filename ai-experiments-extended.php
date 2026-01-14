@@ -11,6 +11,7 @@
  * License:           GPL-2.0-or-later
  * License URI:       https://spdx.org/licenses/GPL-2.0-or-later.html
  * Text Domain:       ai-experiments-extended
+ * Requires Plugins:  ai
  *
  * @package ai-experiments-extended
  */
