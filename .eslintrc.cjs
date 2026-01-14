@@ -1,3 +1,8 @@
+/**
+ * External dependencies
+ */
+const path = require( 'path' );
+
 module.exports = {
 	root: true,
 	extends: [ 'plugin:@wordpress/eslint-plugin/recommended' ],
@@ -7,12 +12,13 @@ module.exports = {
 		ecmaFeatures: {
 			jsx: true,
 		},
-		project: './tsconfig.json',
+		project: path.resolve( __dirname, 'tsconfig.json' ),
+		tsconfigRootDir: __dirname,
 	},
 	settings: {
 		'import/resolver': {
 			typescript: {
-				project: './tsconfig.json',
+				project: path.resolve( __dirname, 'tsconfig.json' ),
 			},
 		},
 	},

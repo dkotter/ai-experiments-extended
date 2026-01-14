@@ -22,6 +22,10 @@ parameters:
 		paths:
 				- ai-experiments-extended.php
 				- includes/
+		scanFiles:
+				- ../ai/includes/Experiment_Registry.php
+				- ../ai/includes/Contracts/Experiment.php
+				- ../ai/includes/Abstracts/Abstract_Experiment.php
 		excludePaths:
 			analyse:
 				- tests/
