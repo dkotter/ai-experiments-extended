@@ -78,31 +78,46 @@ class Post_List_Extensions {
 			return $actions;
 		}
 
-		// Check if post type supports REST API.
+		// Check if post type supports the REST API.
 		$post_type_obj = get_post_type_object( $post->post_type );
 		if ( ! $post_type_obj || empty( $post_type_obj->show_in_rest ) ) {
 			return $actions;
 		}
 
-		// Add excerpt generation action if experiment is enabled and post type supports excerpts.
-		$excerpt_experiment = $this->registry->get_experiment( 'excerpt-generation' );
-		if (
-			$excerpt_experiment &&
-			$excerpt_experiment->is_enabled() &&
-			post_type_supports( $post->post_type, 'excerpt' )
-		) {
-			// Get the REST base for the post type.
-			// WordPress uses rest_base if set, otherwise defaults to post type name.
-			// For built-in types, rest_base is explicitly set (e.g., 'post' -> 'posts').
-			$rest_base = ! empty( $post_type_obj->rest_base )
-				? $post_type_obj->rest_base
-				: $post->post_type;
+		// Get the REST base for the post type.
+		// WordPress uses rest_base if set, otherwise defaults to post type name.
+		// For built-in types, rest_base is explicitly set (e.g., 'post' -> 'posts').
+		$rest_base = ! empty( $post_type_obj->rest_base )
+			? $post_type_obj->rest_base
+			: $post->post_type;
 
-			$actions['generate_excerpt'] = sprintf(
-				'<a href="#" class="ai-generate-excerpt" data-post-id="%d" data-rest-base="%s">%s</a>',
+		$experiments = array(
+			'excerpt-generation' => 'excerpt',
+			'title-generation'   => 'title',
+		);
+
+		// Add action links for each active experiment.
+		foreach ( $experiments as $experiment => $support ) {
+			$experiment_obj = $this->registry->get_experiment( $experiment );
+
+			if (
+				! $experiment_obj ||
+				! $experiment_obj->is_enabled() ||
+				! post_type_supports( $post->post_type, $support )
+			) {
+				continue;
+			}
+
+			$actions[ $experiment ] = sprintf(
+				'<a href="#" class="ai-generate-%s" data-post-id="%d" data-rest-base="%s">%s</a>',
+				esc_attr( $experiment ),
 				absint( $post->ID ),
-				esc_attr( $rest_base ),
-				esc_html__( 'Generate excerpt', 'ai-experiments-extended' )
+				esc_attr( (string) $rest_base ),
+				sprintf(
+					/* translators: %s is the feature the post type supports. */
+					esc_html__( 'Generate %s', 'ai-experiments-extended' ),
+					$support
+				)
 			);
 		}
 
@@ -122,11 +137,13 @@ class Post_List_Extensions {
 			return;
 		}
 
-		// Check if excerpt generation experiment is enabled.
+		// Check if excerpt or title generation experiments are enabled.
 		$excerpt_experiment  = $this->registry->get_experiment( 'excerpt-generation' );
+		$title_experiment    = $this->registry->get_experiment( 'title-generation' );
 		$has_excerpt_support = $excerpt_experiment && $excerpt_experiment->is_enabled();
+		$has_title_support   = $title_experiment && $title_experiment->is_enabled();
 
-		if ( ! $has_excerpt_support ) {
+		if ( ! $has_excerpt_support && ! $has_title_support ) {
 			return;
 		}
 
@@ -162,6 +179,10 @@ class Post_List_Extensions {
 				'excerptGeneration' => array(
 					'enabled' => $has_excerpt_support,
 					'path'    => 'wp-abilities/v1/abilities/ai/excerpt-generation/run',
+				),
+				'titleGeneration'   => array(
+					'enabled' => $has_title_support,
+					'path'    => 'wp-abilities/v1/abilities/ai/title-generation/run',
 				),
 			)
 		);
