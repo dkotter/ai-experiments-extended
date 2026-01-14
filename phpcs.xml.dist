@@ -195,7 +195,7 @@
 		<properties>
 			<property name="text_domain" type="array">
 				<!-- If flagged, remove the text-domain entirely. -->
-				<element value="ai" />
+				<element value="ai-experiments-extended" />
 			</property>
 		</properties>
 	</rule>

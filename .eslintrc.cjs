@@ -45,7 +45,7 @@ module.exports = {
 		'@wordpress/i18n-text-domain': [
 			'error',
 			{
-				allowedTextDomain: 'ai',
+				allowedTextDomain: 'ai-experiments-extended',
 			},
 		],
 		'@wordpress/no-unsafe-wp-apis': 'off',
