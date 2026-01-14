@@ -26,4 +26,9 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 define( 'AI_EXPERIMENTS_EXTENDED_DIR', plugin_dir_path( __FILE__ ) );
 
+// Load Composer autoloader.
+if ( file_exists( AI_EXPERIMENTS_EXTENDED_DIR . 'vendor/autoload.php' ) ) {
+	require_once AI_EXPERIMENTS_EXTENDED_DIR . 'vendor/autoload.php';
+}
+
 require_once AI_EXPERIMENTS_EXTENDED_DIR . 'includes/bootstrap.php';
