@@ -40,7 +40,7 @@ function initPostListExtensions(): void {
 			target.getAttribute( 'data-post-id' ) || '0',
 			10
 		);
-		const postType = target.getAttribute( 'data-post-type' ) || 'post';
+		const restBase = target.getAttribute( 'data-rest-base' ) || 'posts';
 
 		if ( ! postId ) {
 			return;
@@ -49,7 +49,7 @@ function initPostListExtensions(): void {
 		// Dispatch custom event to open excerpt modal.
 		window.dispatchEvent(
 			new CustomEvent( 'aiExperimentsExtended:openExcerptModal', {
-				detail: { postId, postType },
+				detail: { postId, restBase },
 			} )
 		);
 	} );

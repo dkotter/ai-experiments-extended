@@ -24,7 +24,7 @@ declare const aiExperimentsExtendedData: {
 
 interface ModalEventDetail {
 	postId: number;
-	postType: string;
+	restBase: string;
 }
 
 /**
@@ -35,7 +35,7 @@ interface ModalEventDetail {
 export default function ExcerptGenerationModal(): JSX.Element | null {
 	const [ isOpen, setIsOpen ] = useState< boolean >( false );
 	const [ postId, setPostId ] = useState< number | null >( null );
-	const [ postType, setPostType ] = useState< string >( 'post' );
+	const [ restBase, setRestBase ] = useState< string >( 'posts' );
 	const [ generatedExcerpt, setGeneratedExcerpt ] = useState< string >( '' );
 	const [ isUpdating, setIsUpdating ] = useState< boolean >( false );
 	const [ updateError, setUpdateError ] = useState< string | null >( null );
@@ -45,9 +45,9 @@ export default function ExcerptGenerationModal(): JSX.Element | null {
 	// Listen for open modal events.
 	useEffect( () => {
 		const handleOpen = ( event: CustomEvent< ModalEventDetail > ) => {
-			const { postId: newPostId, postType: newPostType } = event.detail;
+			const { postId: newPostId, restBase: newRestBase } = event.detail;
 			setPostId( newPostId );
-			setPostType( newPostType );
+			setRestBase( newRestBase );
 			setGeneratedExcerpt( '' );
 			setUpdateError( null );
 			setIsOpen( true );
@@ -93,15 +93,15 @@ export default function ExcerptGenerationModal(): JSX.Element | null {
 		try {
 			// Update post via REST API.
 			await apiFetch( {
-				path: `/wp/v2/${ postType }/${ postId }`,
+				path: `wp/v2/${ restBase }/${ postId }`,
 				method: 'PATCH',
 				data: {
 					excerpt: generatedExcerpt,
 				},
 			} );
 
-			// Reload the page to show updated excerpt.
-			window.location.reload();
+			// Close the modal after successful update.
+			closeModal();
 		} catch ( err: any ) {
 			setUpdateError(
 				err.message ||
@@ -120,10 +120,6 @@ export default function ExcerptGenerationModal(): JSX.Element | null {
 		<>
 			{ isOpen && (
 				<Modal
-					title={ __(
-						'Generate Excerpt',
-						'ai-experiments-extended'
-					) }
 					onRequestClose={ closeModal }
 					isFullScreen={ false }
 					size="medium"
@@ -192,7 +188,7 @@ export default function ExcerptGenerationModal(): JSX.Element | null {
 									disabled={ isUpdating }
 									isBusy={ isUpdating }
 								>
-									{ __( 'Apply', 'ai-experiments-extended' ) }
+									{ __( 'Save', 'ai-experiments-extended' ) }
 								</Button>
 							</div>
 						</>

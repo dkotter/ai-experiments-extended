@@ -91,10 +91,17 @@ class Post_List_Extensions {
 			$excerpt_experiment->is_enabled() &&
 			post_type_supports( $post->post_type, 'excerpt' )
 		) {
+			// Get the REST base for the post type.
+			// WordPress uses rest_base if set, otherwise defaults to post type name.
+			// For built-in types, rest_base is explicitly set (e.g., 'post' -> 'posts').
+			$rest_base = ! empty( $post_type_obj->rest_base )
+				? $post_type_obj->rest_base
+				: $post->post_type;
+
 			$actions['generate_excerpt'] = sprintf(
-				'<a href="#" class="ai-generate-excerpt" data-post-id="%d" data-post-type="%s">%s</a>',
+				'<a href="#" class="ai-generate-excerpt" data-post-id="%d" data-rest-base="%s">%s</a>',
 				absint( $post->ID ),
-				esc_attr( $post->post_type ),
+				esc_attr( $rest_base ),
 				esc_html__( 'Generate excerpt', 'ai-experiments-extended' )
 			);
 		}
