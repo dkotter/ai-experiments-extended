@@ -24,7 +24,6 @@
     "lint:php": "wp-env run tests-cli --env-cwd=wp-content/plugins/ai-experiments-extended composer run-script lint",
     "lint:php:fix": "wp-env run tests-cli --env-cwd=wp-content/plugins/ai-experiments-extended composer run-script format",
     "lint:php:stan": "wp-env run tests-cli --env-cwd=wp-content/plugins/ai-experiments-extended composer run-script phpstan",
-    "test:php": "wp-env run tests-cli --env-cwd=wp-content/plugins/ai-experiments-extended vendor/bin/phpunit -c phpunit.xml.dist",
     "typecheck": "tsc --noEmit",
     "wp-env": "wp-env"
   },
