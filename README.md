@@ -8,16 +8,29 @@ AI Experiments Extended is a demonstration plugin that extends the [AI Experimen
 
 ## Features
 
-### Post List Excerpt Generation
+### Post List Row Actions
 
-Adds a "Generate excerpt" row action link to the WordPress post list page (`edit.php`). When clicked, it:
+Adds row action links to the WordPress post list page (`edit.php`) for generating excerpts and titles. This demonstrates how to extend existing experiments with new UI entry points without duplicating any core functionality.
+
+#### Excerpt Generation
+
+Adds a "Generate excerpt" row action link. When clicked, it:
 
 - Opens a modal dialog
 - Automatically generates an excerpt using the base plugin's `ai/excerpt-generation` ability
 - Allows users to review and edit the generated excerpt
 - Saves the excerpt directly to the post via the WordPress REST API
 
-This demonstrates how to extend existing experiments with new UI entry points without duplicating any core functionality.
+#### Title Generation
+
+Adds a "Generate title" row action link. When clicked, it:
+
+- Opens a modal dialog
+- Automatically generates multiple title candidates (default: 3) using the base plugin's `ai/title-generation` ability
+- Displays all candidates in editable textareas
+- Allows users to select a title or edit any candidate before applying
+- Updates the post title immediately in the UI after selection
+- Saves the selected title directly to the post via the WordPress REST API
 
 ## Requirements
 
