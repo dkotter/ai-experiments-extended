@@ -13,7 +13,12 @@ const path = require( 'path' );
 module.exports = {
 	...defaultConfig,
 	entry: {
-		...defaultConfig.entry()
+		...defaultConfig.entry(),
+		'post-list-extensions': path.resolve(
+			process.cwd(),
+			'src/post-list-extensions',
+			'index.tsx'
+		),
 	},
 
 	plugins: [

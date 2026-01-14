@@ -123,7 +123,7 @@ class Post_List_Extensions {
 			return;
 		}
 
-		// Enqueue the script using the same pattern as Asset_Loader.
+		// Enqueue the script.
 		$script_path       = AI_EXPERIMENTS_EXTENDED_DIR . 'build/post-list-extensions.js';
 		$script_url        = plugins_url( 'build/post-list-extensions.js', AI_EXPERIMENTS_EXTENDED_DIR . 'ai-experiments-extended.php' );
 		$script_asset_path = AI_EXPERIMENTS_EXTENDED_DIR . 'build/post-list-extensions.asset.php';
@@ -154,10 +154,8 @@ class Post_List_Extensions {
 			array(
 				'excerptGeneration' => array(
 					'enabled' => $has_excerpt_support,
-					'path'    => rest_url( 'wp-abilities/v1/abilities/ai/excerpt-generation/run' ),
+					'path'    => 'wp-abilities/v1/abilities/ai/excerpt-generation/run',
 				),
-				'restUrl'           => rest_url(),
-				'nonce'             => wp_create_nonce( 'wp_rest' ),
 			)
 		);
 	}
