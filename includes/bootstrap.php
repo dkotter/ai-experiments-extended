@@ -36,4 +36,4 @@ function init(): void {
 	);
 }
 
-add_action( 'plugins_loaded', __NAMESPACE__ . '\init', 20 );
+add_action( 'plugins_loaded', __NAMESPACE__ . '\\init', 20 );

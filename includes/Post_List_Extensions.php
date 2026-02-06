@@ -58,7 +58,7 @@ class Post_List_Extensions {
 	}
 
 	/**
-	 * Add row actions for excerpt generation.
+	 * Add custom row actions.
 	 *
 	 * @since 0.1.0
 	 *
