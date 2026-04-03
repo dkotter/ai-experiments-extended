@@ -2,7 +2,7 @@
 /**
  * Post List Extensions class.
  *
- * Adds row actions for excerpt generation to the post list page.
+ * Adds row actions for excerpt and title generation on the post list page.
  *
  * @package AI_Experiments_Extended
  */
@@ -11,7 +11,7 @@ declare( strict_types=1 );
 
 namespace AI_Experiments_Extended;
 
-use WordPress\AI\Experiment_Registry;
+use WordPress\AI\Features\Registry;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -25,21 +25,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Post_List_Extensions {
 
 	/**
-	 * Experiment registry instance.
+	 * Feature registry instance.
 	 *
 	 * @since 0.1.0
-	 * @var \WordPress\AI\Experiment_Registry
+	 * @var \WordPress\AI\Features\Registry
 	 */
-	private Experiment_Registry $registry;
+	private Registry $registry;
 
 	/**
 	 * Constructor.
 	 *
 	 * @since 0.1.0
 	 *
-	 * @param \WordPress\AI\Experiment_Registry $registry Experiment registry instance.
+	 * @param \WordPress\AI\Features\Registry $registry Feature registry instance.
 	 */
-	public function __construct( Experiment_Registry $registry ) {
+	public function __construct( Registry $registry ) {
 		$this->registry = $registry;
 	}
 
@@ -98,11 +98,11 @@ class Post_List_Extensions {
 
 		// Add action links for each active experiment.
 		foreach ( $experiments as $experiment => $support ) {
-			$experiment_obj = $this->registry->get_experiment( $experiment );
+			$feature = $this->registry->get_feature( $experiment );
 
 			if (
-				! $experiment_obj ||
-				! $experiment_obj->is_enabled() ||
+				! $feature ||
+				! $feature->is_enabled() ||
 				! post_type_supports( $post->post_type, $support )
 			) {
 				continue;
@@ -137,11 +137,11 @@ class Post_List_Extensions {
 			return;
 		}
 
-		// Check if excerpt or title generation experiments are enabled.
-		$excerpt_experiment  = $this->registry->get_experiment( 'excerpt-generation' );
-		$title_experiment    = $this->registry->get_experiment( 'title-generation' );
-		$has_excerpt_support = $excerpt_experiment && $excerpt_experiment->is_enabled();
-		$has_title_support   = $title_experiment && $title_experiment->is_enabled();
+		// Check if excerpt or title generation features are enabled.
+		$excerpt_feature     = $this->registry->get_feature( 'excerpt-generation' );
+		$title_feature       = $this->registry->get_feature( 'title-generation' );
+		$has_excerpt_support = $excerpt_feature && $excerpt_feature->is_enabled();
+		$has_title_support   = $title_feature && $title_feature->is_enabled();
 
 		if ( ! $has_excerpt_support && ! $has_title_support ) {
 			return;

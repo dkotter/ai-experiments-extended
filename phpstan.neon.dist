@@ -23,9 +23,8 @@ parameters:
 				- ai-experiments-extended.php
 				- includes/
 		scanFiles:
-				- ../ai/includes/Experiment_Registry.php
-				- ../ai/includes/Contracts/Experiment.php
-				- ../ai/includes/Abstracts/Abstract_Experiment.php
+				- ../ai/includes/Features/Registry.php
+				- ../ai/includes/Contracts/Feature.php
 		excludePaths:
 			analyse:
 				- tests/

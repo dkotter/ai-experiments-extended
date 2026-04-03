@@ -20,19 +20,19 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @since 0.1.0
  */
 function init(): void {
-	// Check if the base AI Experiments plugin is active.
-	if ( ! class_exists( 'WordPress\AI\Experiment_Registry' ) ) {
+	// Check if the base AI plugin is active.
+	if ( ! class_exists( 'WordPress\AI\Features\Registry' ) ) {
 		return;
 	}
 
-	// Hook into the experiment registration to access the registry.
+	// Hook after built-in features are registered.
 	add_action(
-		'ai_experiments_register_experiments',
+		'wpai_register_features',
 		static function ( $registry ) {
 			$extensions = new Post_List_Extensions( $registry );
 			$extensions->init();
 		},
-		20 // Run after base experiments are registered.
+		20
 	);
 }
 

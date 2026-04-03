@@ -10,7 +10,7 @@ Extended AI experiments for WordPress that demonstrate how easy it is to extend 
 
 == Description ==
 
-AI Experiments Extended is a demonstration plugin that extends the [AI Experiments](https://github.com/WordPress/ai) plugin by adding new UI entry points for existing experiments. This plugin shows how third-party developers can leverage the base plugin's experiment registry and abilities to create custom integrations.
+AI Experiments Extended is a demonstration plugin that extends the [AI Experiments](https://github.com/WordPress/ai) plugin by adding new UI entry points for existing experiments. This plugin shows how third-party developers can leverage the base plugin's feature registry and abilities to create custom integrations.
 
 **What This Plugin Does:**
 
@@ -26,13 +26,11 @@ This plugin demonstrates how to extend the AI Experiments plugin without duplica
 
 **How It Works:**
 
-1. Hooks into the base plugin's experiment registry using the `ai_experiments_register_experiments` action
-2. Checks if experiments (`excerpt-generation` and `title-generation`) are enabled before showing UI
+1. Hooks into the base plugin's feature registration using the `wpai_register_features` action (see AI plugin 0.6+ developer docs)
+2. Checks if features (`excerpt-generation` and `title-generation`) are enabled before showing UI
 3. Adds row action links to post list pages using WordPress filters
 4. Calls the base plugin's abilities via REST API when actions are clicked
 5. Updates post content (excerpt or title) using WordPress REST API
-6. For title generation, immediately updates the UI to reflect the new title without page refresh
-
 This plugin serves as a reference implementation for developers who want to extend the AI Experiments plugin with custom UI integrations.
 
 == Installation ==
