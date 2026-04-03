@@ -29,7 +29,7 @@ async function generateTitles( postId: number ): Promise< string[] > {
 		method: 'POST',
 		data: {
 			input: {
-				post_id: postId,
+				context: postId.toString(),
 			},
 		},
 	} )
